@@ -1,7 +1,7 @@
 #!/bin/bash
 # GitHub personal access token with repo scope
 # Ensure you have generated a token with appropriate permissions
-github_token="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"
+github_token="xxxxxxxxxx"
 
 # Array of repositories to clone
 repos=(
