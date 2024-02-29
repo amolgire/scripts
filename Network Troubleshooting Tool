@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Troubleshooting Tools</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Network Troubleshooting Tools</h1>
+    <label for="target">Target IP/Domain:</label>
+    <input type="text" id="target" placeholder="Enter IP address or domain">
+    <button onclick="ping()">Ping</button>
+    <button onclick="traceroute()">Traceroute</button>
+    <h2>Result:</h2>
+    <textarea id="result" readonly></textarea>
+
+    <script>
+        function ping() {
+            var target = document.getElementById("target").value;
+            if (target.trim() === "") {
+                alert("Please enter a valid IP address or domain");
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").value = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "ping.sh?target=" + target, true);
+            xhr.send();
+        }
+
+        function traceroute() {
+            var target = document.getElementById("target").value;
+            if (target.trim() === "") {
+                alert("Please enter a valid IP address or domain");
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").value = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "traceroute.sh?target=" + target, true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
