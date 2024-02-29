@@ -1,0 +1,45 @@
+provider "azurerm" {
+  features {}
+}
+
+# Define Azure ExpressRoute Direct circuit
+resource "azurerm_express_route_circuit" "example" {
+  name                = "example-circuit"
+  location            = "East US"
+  resource_group_name = azurerm_resource_group.example.name
+  sku                 = "Standard"
+}
+
+# Define MACsec configuration for the ExpressRoute Direct circuit
+resource "azurerm_express_route_direct_circuit_macsec_config" "example" {
+  name                         = "example-macsec"
+  resource_group_name          = azurerm_resource_group.example.name
+  circuit_name                 = azurerm_express_route_circuit.example.name
+  encryption_mode              = "ShouldEncrypt"
+  connectivity_type            = "Connected"
+  key_management_protocol      = "IKEv2"
+  key_management_lifetime_days = 365
+  key_management_policy_name   = "example-policy"
+}
+
+# Define MACsec policy for the ExpressRoute Direct circuit
+resource "azurerm_express_route_direct_circuit_macsec_policy" "example" {
+  name                   = "example-policy"
+  resource_group_name    = azurerm_resource_group.example.name
+  lifetime_days          = 365
+  cak_lifetime_days      = 365
+  sak_lifetime_messages  = 1000000
+  sak_replay_window_size = 64
+}
+
+
+In this Terraform configuration:
+
+	•	The azurerm_express_route_circuit resource defines the ExpressRoute Direct circuit.
+	•	The azurerm_express_route_direct_circuit_macsec_config resource configures MACsec for the ExpressRoute Direct circuit, specifying parameters like encryption mode, key management protocol, etc.
+	•	The azurerm_express_route_direct_circuit_macsec_policy resource defines the MACsec policy, specifying parameters such as lifetime, replay window size, etc.
+
+Ensure you replace placeholder values such as example-circuit, East US, and others with your actual Azure resources and configurations.
+
+After defining these resources, you can run terraform init and terraform apply to apply the configuration and provision the MACsec configuration for your ExpressRoute Direct circuit.
+
